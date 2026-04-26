@@ -1,2 +1,0 @@
-# XiaMingQingDiary
-Co-Card style
