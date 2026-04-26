@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mingxingdiary — Luminous Softness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Italiana&family=Caveat:wght@400;500&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf3e3;
+    --cream-2: #f5ead1;
+    --paper: #fff9eb;
+    --gold: #c9a560;
+    --gold-deep: #9a7a36;
+    --ink: #4a3a22;
+    --ink-2: #7b6742;
+    --rose: #e6c3a4;
+    --tape: rgba(232, 204, 150, 0.55);
+    --line: rgba(154, 122, 54, 0.35);
+    --shadow-1: 0 18px 50px -18px rgba(154, 122, 54, 0.28);
+    --shadow-2: 0 30px 70px -22px rgba(154, 122, 54, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Paper ruled lines background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to bottom, transparent 0, transparent calc(100% - 1px), rgba(154, 122, 54, 0.07) calc(100% - 1px));
+    background-size: 100% 38px;
+    z-index: -2;
+  }
+
+  /* Orbs */
+  .bg-orbs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; }
+  .orb.o1 { width: 500px; height: 500px; background: radial-gradient(circle, #ffe3a8, transparent 70%); top: -140px; right: -100px; animation: drift 24s ease-in-out infinite alternate; }
+  .orb.o2 { width: 420px; height: 420px; background: radial-gradient(circle, #f3c29a, transparent 70%); top: 55%; left: -120px; animation: drift 30s ease-in-out infinite alternate-reverse; }
+  .orb.o3 { width: 360px; height: 360px; background: radial-gradient(circle, #fff0c2, transparent 70%); bottom: -100px; right: 20%; animation: drift 28s ease-in-out infinite alternate; }
+  @keyframes drift {
+    0%   { transform: translate(0,0) scale(1); }
+    100% { transform: translate(40px,-30px) scale(1.1); }
+  }
+
+  /* Grain */
+  .grain {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    opacity: 0.2; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.46  0 0 0 0 0.2  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Particles */
+  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+  .particle {
+    position: absolute; width: 3px; height: 3px;
+    background: #fff3c2; border-radius: 50%;
+    box-shadow: 0 0 8px 2px rgba(255, 223, 150, 0.8);
+    opacity: 0; animation: float-up linear infinite;
+  }
+  @keyframes float-up {
+    0% { opacity: 0; transform: translateY(0) translateX(0); }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.8; }
+    100% { opacity: 0; transform: translateY(-110vh) translateX(30px); }
+  }
+
+  /* Typography */
+  h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; font-weight: 500; color: var(--ink); }
+  .italiana { font-family: 'Italiana', serif; letter-spacing: 0.06em; }
+  .hand { font-family: 'Caveat', cursive; color: var(--gold-deep); }
+
+  /* Layout grid */
+  .stage {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+  }
+
+  /* LEFT RAIL — sticky */
+  .rail {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 48px 0;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .rail .mark {
+    font-family: 'Italiana', serif;
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    color: var(--gold-deep);
+  }
+  .rail .mark .dot { color: var(--gold); }
+  .rail .vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-2);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin: auto 0;
+    opacity: 0.85;
+  }
+  .rail .meta {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .rail .meta b { color: var(--gold-deep); font-weight: 500; font-style: normal; letter-spacing: 0.08em; }
+
+  /* RIGHT COLUMN */
+  .content { padding: 48px 0 0 64px; position: relative; }
+
+  /* HERO */
+  .hero {
+    padding: 60px 0 100px;
+    position: relative;
+  }
+  .issue-strip {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 40px;
+  }
+  .issue-strip .line { flex: 1; height: 1px; background: var(--line); max-width: 240px; }
+
+  .hero h1 {
+    font-size: clamp(64px, 11vw, 160px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    color: var(--ink);
+    position: relative;
+  }
+  .hero h1 .l2 {
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(180deg, #8c7035 0%, #c9a560 50%, #e8c77b 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-left: clamp(60px, 12vw, 200px);
+  }
+  .hero h1 .dot-gold {
+    color: var(--gold);
+    font-family: 'Italiana', serif;
+    font-style: normal;
+  }
+  .hero .hand-note {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    font-family: 'Caveat', cursive;
+    font-size: 34px;
+    color: var(--gold-deep);
+    transform: rotate(-6deg);
+    max-width: 220px;
+    line-height: 1.15;
+    opacity: 0.9;
+  }
+  .hero .hand-note::after {
+    content: '↙';
+    display: block;
+    font-size: 28px;
+    margin-top: -4px;
+    color: var(--gold);
+  }
+
+  .hero-foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .hero-foot .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(20px, 2.4vw, 28px);
+    color: var(--ink-2);
+    max-width: 480px;
+  }
+  .hero-foot .handle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--ink-2);
+    text-align: right;
+  }
+  .hero-foot .handle b {
+    display: block;
+    font-family: 'Italiana', serif;
+    font-size: 22px;
+    color: var(--gold-deep);
+    letter-spacing: 0.1em;
+    font-weight: 400;
+  }
+
+  /* Section number heading */
+  .chapter {
+    padding: 60px 0;
+    position: relative;
+  }
+  .chapter .num {
+    font-family: 'Italiana', serif;
+    font-size: clamp(120px, 18vw, 240px);
+    line-height: 0.85;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--gold);
+    letter-spacing: -0.02em;
+    margin-bottom: -20px;
+    position: relative;
+  }
+  .chapter .num::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 28px;
+    left: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    -webkit-text-stroke: 0;
+  }
+  .chapter h2 {
+    font-size: clamp(36px, 5vw, 68px);
+    font-style: italic;
+    line-height: 1.08;
+    margin-bottom: 20px;
+    max-width: 820px;
+  }
+  .chapter h2 em {
+    font-family: 'Italiana', serif;
+    font-style: normal;
+    color: var(--gold-deep);
+    letter-spacing: 0.02em;
+  }
+  .chapter .lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink-2);
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  /* DIARY / BIO GRID — asymmetric */
+  .diary-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+  .card-paper {
+    background: linear-gradient(180deg, var(--paper) 0%, #fbf1d8 100%);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px 30px;
+    box-shadow: var(--shadow-1);
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.5s ease;
+  }
+  .card-paper:hover {
+    transform: translateY(-4px) rotate(-0.4deg);
+    box-shadow: var(--shadow-2);
+  }
+  .card-paper .tape {
+    position: absolute;
+    top: -14px;
+    width: 90px;
+    height: 26px;
+    background: var(--tape);
+    border: 1px dashed rgba(154, 122, 54, 0.4);
+    transform: rotate(-3deg);
+    left: 24px;
+    backdrop-filter: blur(4px);
+  }
+  .card-paper .tape.right { left: auto; right: 24px; transform: rotate(4deg); }
+
+  .k-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .k-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    line-height: 1.25;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* grid placements */
+  .g-name      { grid-column: 1 / span 7; }
+  .g-stat      { grid-column: 8 / span 5; transform: rotate(1.2deg); }
+  .g-project   { grid-column: 1 / span 5; transform: rotate(-0.8deg); }
+  .g-handle    { grid-column: 6 / span 4; }
+  .g-content   { grid-column: 10 / span 3; transform: rotate(1.4deg); }
+  .g-desc      { grid-column: 1 / span 9; }
+  .g-badge     { grid-column: 10 / span 3; display: flex; align-items: center; justify-content: center; transform: rotate(-1.8deg); }
+
+  .stat-big {
+    font-family: 'Italiana', serif;
+    font-size: 96px;
+    line-height: 1;
+    color: var(--gold-deep);
+    letter-spacing: 0.02em;
+  }
+  .stat-big small {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-2);
+    letter-spacing: 0;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .content-tags { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .tag-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 249, 235, 0.6);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--gold-deep);
+    text-align: center;
+  }
+
+  .badge-pill {
+    padding: 14px 18px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--gold-deep);
+    text-align: center;
+    line-height: 1.4;
+    background: rgba(255, 232, 180, 0.3);
+  }
+
+  /* Pull quote strip */
+  .pull {
+    margin: 80px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+    position: relative;
+  }
+  .pull blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 44px);
+    line-height: 1.25;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .pull blockquote::before, .pull blockquote::after {
+    content: '“';
+    font-family: 'Italiana', serif;
+    font-size: 1.1em;
+    color: var(--gold);
+  }
+  .pull blockquote::after { content: '”'; }
+  .pull .attr {
+    margin-top: 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+
+  /* ARTBOOK — timeline track layout */
+  .track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    position: relative;
+    margin-top: 40px;
+  }
+  .track::before {
+    content: '';
+    position: absolute;
+    top: 42px;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 14px);
+    z-index: 0;
+  }
+  .track-step {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 24px 26px;
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-1);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  .track-step:hover { transform: translateY(-6px); box-shadow: var(--shadow-2); }
+  .track-step .orb-num {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, #f6dc95, #c9a560);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Italiana', serif; font-size: 22px; color: #5a4420;
+    margin: 0 auto 18px;
+    box-shadow: 0 6px 18px -6px rgba(154,122,54,0.6), inset 0 1px 0 rgba(255,255,255,0.7);
+  }
+  .track-step .s-label {
+    display: block;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 10px;
+  }
+  .track-step .s-text {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  /* BLIND BOX — polaroid style */
+  .polaroid-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-top: 30px;
+  }
+  .polaroid {
+    width: 100%;
+    max-width: 420px;
+    background: #fff9ec;
+    padding: 18px 18px 70px;
+    border: 1px solid rgba(154,122,54,0.25);
+    box-shadow: var(--shadow-2);
+    transform: rotate(-3.5deg);
+    transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
+    margin: 0 auto;
+    position: relative;
+  }
+  .polaroid:hover { transform: rotate(0deg) scale(1.03); }
+  .polaroid .tape {
+    position: absolute; top: -12px; left: 50%;
+    width: 110px; height: 24px;
+    transform: translateX(-50%) rotate(-2deg);
+    background: var(--tape);
+    border: 1px dashed rgba(154, 122, 54, 0.4);
+  }
+  .polaroid .photo {
+    aspect-ratio: 1/1;
+    border-radius: 2px;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(255, 245, 210, 0.95) 0%, transparent 65%),
+      linear-gradient(135deg, #f4d998 0%, #d9b161 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .polaroid .photo::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: shimmer 4.5s ease-in-out infinite;
+  }
+  @keyframes shimmer { 0%,100% { transform: translateX(-100%); } 50% { transform: translateX(100%); } }
+  .polaroid .photo .seal {
+    font-family: 'Italiana', serif;
+    font-size: 72px;
+    color: #7a5a18;
+    text-shadow: 0 2px 10px rgba(255,255,255,0.5);
+    z-index: 1;
+  }
+  .polaroid .caption {
+    position: absolute;
+    bottom: 18px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--gold-deep);
+  }
+  .blind-copy h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.05;
+    margin-bottom: 18px;
+  }
+  .blind-copy p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--ink-2);
+    max-width: 380px;
+  }
+  .blind-copy .hand-arrow {
+    font-family: 'Caveat', cursive;
+    font-size: 26px;
+    color: var(--gold-deep);
+    margin-top: 24px;
+    display: inline-block;
+    transform: rotate(-3deg);
+  }
+
+  /* FOOTER */
+  footer {
+    grid-column: 1 / -1;
+    padding: 100px 0 60px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    margin-top: 80px;
+  }
+  footer .mark {
+    font-family: 'Italiana', serif;
+    font-size: 24px;
+    letter-spacing: 0.25em;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+  }
+  footer .note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-2);
+  }
+  footer .sun {
+    display: inline-block;
+    color: var(--gold-deep);
+    animation: twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.2); }
+  }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s cubic-bezier(0.2,0.8,0.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .stage { grid-template-columns: 1fr; padding: 0 22px; }
+    .rail {
+      position: relative; height: auto;
+      flex-direction: row; justify-content: space-between; align-items: center;
+      padding: 24px 0; border-right: none; border-bottom: 1px solid var(--line);
+    }
+    .rail .vertical { writing-mode: horizontal-tb; transform: none; margin: 0; }
+    .content { padding: 32px 0 0; }
+    .hero h1 .l2 { margin-left: 0; }
+    .hero .hand-note { position: static; margin-top: 20px; transform: rotate(-4deg); display: inline-block; }
+    .diary-grid { grid-template-columns: repeat(6, 1fr); }
+    .g-name, .g-desc     { grid-column: 1 / -1; transform: none; }
+    .g-stat, .g-project, .g-handle, .g-content, .g-badge { grid-column: span 3; transform: none; }
+    .track { grid-template-columns: 1fr; }
+    .track::before { display: none; }
+    .polaroid-row { grid-template-columns: 1fr; gap: 30px; }
+    .stat-big { font-size: 72px; }
+  }
+  @media (max-width: 520px) {
+    .g-stat, .g-project, .g-handle, .g-content, .g-badge { grid-column: 1 / -1; }
+    .blind-copy h4 { font-size: 36px; }
+  }
+</style>
+</head>
+<body data-testid="fansite-page">
+
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="particles" id="particles" aria-hidden="true"><span class="particle" style="width: 4.67232px; height: 4.67232px; left: 38.5965vw; bottom: -16.5192vh; animation-duration: 15.5925s; animation-delay: -14.0503s;"></span><span class="particle" style="width: 3.89189px; height: 3.89189px; left: 63.6158vw; bottom: -9.97165vh; animation-duration: 18.148s; animation-delay: -3.32863s;"></span><span class="particle" style="width: 4.17103px; height: 4.17103px; left: 72.9547vw; bottom: -11.7151vh; animation-duration: 28.3271s; animation-delay: -13.2964s;"></span><span class="particle" style="width: 4.20496px; height: 4.20496px; left: 20.9284vw; bottom: -17.7912vh; animation-duration: 23.4376s; animation-delay: -18.4676s;"></span><span class="particle" style="width: 2.7308px; height: 2.7308px; left: 0.834749vw; bottom: -17.3035vh; animation-duration: 17.3777s; animation-delay: -13.2084s;"></span><span class="particle" style="width: 3.02534px; height: 3.02534px; left: 71.3129vw; bottom: -15.914vh; animation-duration: 16.7933s; animation-delay: -13.548s;"></span><span class="particle" style="width: 4.08622px; height: 4.08622px; left: 79.3155vw; bottom: -18.932vh; animation-duration: 25.0812s; animation-delay: -19.3577s;"></span><span class="particle" style="width: 3.94222px; height: 3.94222px; left: 53.7457vw; bottom: -8.9397vh; animation-duration: 29.9226s; animation-delay: -1.92305s;"></span><span class="particle" style="width: 4.08184px; height: 4.08184px; left: 48.7407vw; bottom: -14.3971vh; animation-duration: 27.7426s; animation-delay: -4.53019s;"></span><span class="particle" style="width: 3.73049px; height: 3.73049px; left: 52.774vw; bottom: -15.9227vh; animation-duration: 21.6254s; animation-delay: -18.7299s;"></span><span class="particle" style="width: 3.90503px; height: 3.90503px; left: 69.4514vw; bottom: -18.7759vh; animation-duration: 25.6616s; animation-delay: -15.9466s;"></span><span class="particle" style="width: 3.97677px; height: 3.97677px; left: 38.79vw; bottom: -6.79887vh; animation-duration: 20.7238s; animation-delay: -13.6741s;"></span><span class="particle" style="width: 3.2404px; height: 3.2404px; left: 16.7391vw; bottom: -14.8982vh; animation-duration: 28.7484s; animation-delay: -17.6189s;"></span><span class="particle" style="width: 3.04739px; height: 3.04739px; left: 19.1489vw; bottom: -19.8571vh; animation-duration: 20.5575s; animation-delay: -19.2126s;"></span><span class="particle" style="width: 3.35327px; height: 3.35327px; left: 51.2824vw; bottom: -8.61327vh; animation-duration: 16.4493s; animation-delay: -4.05436s;"></span><span class="particle" style="width: 3.87347px; height: 3.87347px; left: 34.587vw; bottom: -14.0668vh; animation-duration: 21.8939s; animation-delay: -18.1244s;"></span><span class="particle" style="width: 4.67637px; height: 4.67637px; left: 35.3419vw; bottom: -14.5797vh; animation-duration: 23.7455s; animation-delay: -10.0649s;"></span><span class="particle" style="width: 3.83343px; height: 3.83343px; left: 78.1675vw; bottom: -5.45395vh; animation-duration: 16.2963s; animation-delay: -18.4064s;"></span><span class="particle" style="width: 3.40154px; height: 3.40154px; left: 84.0376vw; bottom: -14.4364vh; animation-duration: 17.0287s; animation-delay: -7.71117s;"></span><span class="particle" style="width: 3.33197px; height: 3.33197px; left: 85.1902vw; bottom: -18.9612vh; animation-duration: 19.874s; animation-delay: -0.549799s;"></span><span class="particle" style="width: 4.45815px; height: 4.45815px; left: 33.9839vw; bottom: -6.88059vh; animation-duration: 18.2988s; animation-delay: -4.7562s;"></span><span class="particle" style="width: 4.30162px; height: 4.30162px; left: 14.5404vw; bottom: -7.66656vh; animation-duration: 24.3134s; animation-delay: -12.0355s;"></span><span class="particle" style="width: 3.7242px; height: 3.7242px; left: 94.2533vw; bottom: -19.3975vh; animation-duration: 22.5004s; animation-delay: -5.57692s;"></span><span class="particle" style="width: 3.77113px; height: 3.77113px; left: 74.7738vw; bottom: -13.8719vh; animation-duration: 28.9464s; animation-delay: -2.45139s;"></span></div>
+
+  <div class="stage">
+
+    <!-- LEFT STICKY RAIL -->
+    <aside class="rail" data-testid="rail">
+      <div class="mark italiana">M<span class="dot">·</span>D</div>
+      <div class="vertical">mingxingdiary — an archive of light</div>
+      <div class="meta">
+        Issue <b>№ 01</b><br>
+        Winter <b>2026</b><br>
+        Edition <b>Luminous</b>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <section class="hero" data-testid="hero-section">
+        <div class="issue-strip">
+          <span>☀️ Light and Night</span>
+          <span class="line"></span>
+          <span>For Xia Mingxing ✦</span>
+        </div>
+
+        <h1 data-testid="hero-title">
+          Luminous<span class="dot-gold">.</span>
+          <span class="l2"><em>Softness</em></span>
+        </h1>
+
+        <span class="hand-note" data-testid="hand-note">where the light<br>feels softer</span>
+
+        <div class="hero-foot">
+          <p class="tagline" data-testid="hero-tagline">
+            A quiet archive of golden hours — quotes, stories and translations, kept the way one keeps pressed flowers between pages.
+          </p>
+          <div class="handle" data-testid="hero-handle">
+            curated by<br>
+            <b>@Jessica6201m</b>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 01 — BIO -->
+      <section class="chapter reveal" data-testid="bio-section">
+        <div class="num italiana" data-label="About the fansite">01</div>
+        <h2>A little desk of <em>golden things</em>.</h2>
+        <p class="lede">The clippings, the stats, the tiny promises — pinned softly to the page.</p>
+
+        <div class="diary-grid">
+          <div class="card-paper g-name" data-testid="bio-name">
+            <div class="tape"></div>
+            <span class="k-label">Name</span>
+            <div class="k-value"><em>mingxingdiary</em></div>
+            <p class="hand" style="font-size:22px; margin-top:10px;">a love letter, re-opened daily ✿</p>
+          </div>
+
+          <div class="card-paper g-stat" data-testid="bio-stat">
+            <span class="k-label">Archive</span>
+            <div class="stat-big">34<small>posts kept so far</small></div>
+          </div>
+
+          <div class="card-paper g-project" data-testid="bio-project">
+            <div class="tape right"></div>
+            <span class="k-label">Project</span>
+            <div class="k-value italiana" style="font-style:normal; letter-spacing:0.08em;">LUMINOUS SOFTNESS</div>
+          </div>
+
+          <div class="card-paper g-handle" data-testid="bio-handle">
+            <span class="k-label">Handle</span>
+            <div class="k-value" style="font-style:normal;">@Jessica6201m</div>
+          </div>
+
+          <div class="card-paper g-content" data-testid="bio-content">
+            <span class="k-label">Content</span>
+            <div class="content-tags">
+              <span class="tag-pill">quotes</span>
+              <span class="tag-pill">story</span>
+              <span class="tag-pill">translations</span>
+            </div>
+          </div>
+
+          <div class="card-paper g-desc" data-testid="bio-desc">
+            <span class="k-label">Description</span>
+            <div class="k-value">A fan project dedicated to <em>Xia Mingxing</em> — tender notes, soft translations, stories kept near the heart.</div>
+          </div>
+
+          <div class="card-paper g-badge" data-testid="bio-badge">
+            <div class="badge-pill">☀️ Light and Night<br><span style="color:var(--ink-2);">For Xia Mingxing ✦</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PULL QUOTE -->
+      <section class="pull reveal">
+        <blockquote>Where the light feels softer, the page turns kinder.</blockquote>
+        <div class="attr">— mingxingdiary, winter 2026</div>
+      </section>
+
+      <!-- CHAPTER 02 — ARTBOOK -->
+      <section class="chapter reveal" data-testid="artbook-section">
+        <div class="num italiana" data-label="How to get">02</div>
+        <h2>Digital Artbook <em>—</em> Xia Mingxing <em>2026</em>.</h2>
+        <p class="lede">A small ritual in three steps. Stitched along a dotted little path.</p>
+
+        <div class="track">
+          <div class="track-step" data-testid="step-1">
+            <div class="orb-num">I</div>
+            <span class="s-label">Step one</span>
+            <div class="s-text">Follow the fansite.</div>
+          </div>
+          <div class="track-step" data-testid="step-2">
+            <div class="orb-num">II</div>
+            <span class="s-label">Step two</span>
+            <div class="s-text">Leave a birthday wish in the comments — with your Gmail.</div>
+          </div>
+          <div class="track-step" data-testid="step-3">
+            <div class="orb-num">III</div>
+            <span class="s-label">Step three</span>
+            <div class="s-text">Wait quietly — the artbook will arrive like sunlight.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 03 — BLIND BOX -->
+      <section class="chapter reveal" data-testid="blindbox-section" style="padding-bottom:20px;">
+        <div class="num italiana" data-label="Little surprise">03</div>
+        <h2><em>Blind</em> Box.</h2>
+        <p class="lede">A mystery message from Xia Mingxing — folded and sealed, just for you.</p>
+
+        <div class="polaroid-row">
+          <div class="polaroid" data-testid="blindbox-polaroid">
+            <div class="tape"></div>
+            <div class="photo">
+              <span class="seal">✦</span>
+            </div>
+            <div class="caption">open with care ·</div>
+          </div>
+          <div class="blind-copy">
+            <h4>A small envelope, <em>a warm voice.</em></h4>
+            <p>Pick one without looking. Inside waits a line only meant for you — tucked in sunlight.</p>
+            <div class="hand-arrow">↗ pick one, softly</div>
+          </div>
+        </div>
+      </section>
+
+      <footer data-testid="site-footer">
+        <div class="mark">M · D</div>
+        <div class="note">mingxingdiary © 2026 — made with <span class="sun">☀️</span> for Xia Mingxing</div>
+      </footer>
+
+    </main>
+  </div>
+
+<script>
+  // Particles
+  (function(){
+    const root = document.getElementById('particles');
+    if (!root) return;
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle';
+      const s = 2 + Math.random() * 3;
+      p.style.width = s + 'px'; p.style.height = s + 'px';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.bottom = (-5 - Math.random() * 15) + 'vh';
+      p.style.animationDuration = (14 + Math.random() * 18) + 's';
+      p.style.animationDelay = (-Math.random() * 20) + 's';
+      root.appendChild(p);
+    }
+  })();
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+
+
+</body></html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mingxingdiary — Choose Your Style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Italiana&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: #2b2010;
+    background-image: radial-gradient(ellipse at 50% 30%, #4a3820 0%, #1d1409 70%);
+    color: #f9efd3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .title {
+    font-family: 'Italiana', serif;
+    font-size: clamp(14px, 2vw, 18px);
+    letter-spacing: 0.5em;
+    color: #b7893a;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(42px, 7vw, 80px);
+    line-height: 1;
+    text-align: center;
+    background: linear-gradient(180deg, #f5e4b0 0%, #c89540 60%, #8a6420 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+  }
+
+  .sub {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: #b7893a;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .card {
+    background: linear-gradient(160deg, #f9efd3 0%, #f0ddb5 100%);
+    border-radius: 4px;
+    padding: 40px 28px;
+    text-decoration: none;
+    color: #3d2f18;
+    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,230,150,0.4), transparent 60%);
+    pointer-events: none;
+  }
+  .card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7);
+  }
+
+  .card-num {
+    font-family: 'Italiana', serif;
+    font-size: 13px;
+    letter-spacing: 0.5em;
+    color: #b7893a;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: #3d2f18;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: #7a6330;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+
+  .card-btn {
+    font-family: 'Italiana', serif;
+    font-size: 12px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #b55436;
+    border-bottom: 1px solid #b55436;
+    padding-bottom: 2px;
+  }
+
+  .sep {
+    color: #b7893a;
+    margin: 48px 0 20px;
+    font-family: 'Italiana', serif;
+    letter-spacing: 0.5em;
+    font-size: 13px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .footer {
+    font-family: 'Caveat', cursive;
+    font-size: 18px;
+    color: #b7893a;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 700px) {
+    .cards { grid-template-columns: 1fr; max-width: 380px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="title">mingxingdiary</div>
+<h1>Luminous<br>Softness</h1>
+<div class="sub">— choose your style —</div>
+
+<div class="cards">
+  <a class="card" href="style1.html">
+    <div class="card-num">Style · I</div>
+    <div class="card-name">Luminous<br>Softness</div>
+    <div class="card-desc">Soft cream tones, floating orbs, airy cards — gentle and modern.</div>
+    <div class="card-btn">Open →</div>
+  </a>
+
+  <a class="card" href="style2.html">
+    <div class="card-num">Style · II</div>
+    <div class="card-name">Diary<br>Pages</div>
+    <div class="card-desc">Lined paper, handwritten feel, warm golden notes — like a real diary.</div>
+    <div class="card-btn">Open →</div>
+  </a>
+
+  <a class="card" href="style3.html">
+    <div class="card-num">Style · III</div>
+    <div class="card-name">Book of<br>Light</div>
+    <div class="card-desc">An illuminated manuscript — dark background, golden book spread, floating specks.</div>
+    <div class="card-btn">Open →</div>
+  </a>
+</div>
+
+<div class="sep">✦ · · ✦</div>
+<div class="footer">for Xia Mingxing, softly ✿</div>
+
+</body>
+</html>
