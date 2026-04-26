@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)https://mingxing-glow.preview.emergentagent.com/style-1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mingxingdiary — Luminous Softness (Style 1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./mingxingdiary — Luminous Softness (Style 1)_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fbf5ea;
+    --cream-deep: #f5ebd6;
+    --champagne: #e9d7b0;
+    --gold: #c9a96a;
+    --gold-deep: #a8863f;
+    --ink: #5a4a32;
+    --ink-soft: #8a7553;
+    --rose: #e8c9b0;
+    --white-warm: #fffaf0;
+    --shadow-soft: 0 20px 60px -20px rgba(168, 134, 63, 0.25);
+    --shadow-card: 0 10px 40px -12px rgba(168, 134, 63, 0.18);
+    --shadow-hover: 0 24px 70px -18px rgba(168, 134, 63, 0.35);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif; font-weight: 300;
+    background: var(--cream); color: var(--ink);
+    line-height: 1.7; overflow-x: hidden; position: relative; min-height: 100vh;
+  }
+  .bg-orbs { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; animation: drift 22s ease-in-out infinite alternate; }
+  .orb.o1 { width: 480px; height: 480px; background: radial-gradient(circle, #ffe7b8 0%, transparent 70%); top: -120px; left: -80px; }
+  .orb.o2 { width: 560px; height: 560px; background: radial-gradient(circle, #f5d9a8 0%, transparent 70%); top: 40%; right: -160px; animation-delay: -7s; animation-duration: 28s; }
+  .orb.o3 { width: 420px; height: 420px; background: radial-gradient(circle, #f3c9b0 0%, transparent 70%); bottom: -120px; left: 20%; animation-delay: -14s; animation-duration: 32s; }
+  .orb.o4 { width: 320px; height: 320px; background: radial-gradient(circle, #fff1cf 0%, transparent 70%); top: 22%; left: 45%; animation-delay: -4s; animation-duration: 26s; }
+  @keyframes drift { 0% { transform: translate(0,0) scale(1);} 50% { transform: translate(40px,-30px) scale(1.08);} 100% { transform: translate(-30px,40px) scale(0.96);} }
+
+  .grain { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.18; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.66  0 0 0 0 0.52  0 0 0 0 0.25  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+  .particle { position: absolute; width: 3px; height: 3px; background: #fff3cf; border-radius: 50%;
+    box-shadow: 0 0 8px 2px rgba(255,225,160,0.75); opacity: 0; animation: float-up linear infinite; }
+  @keyframes float-up {
+    0% { opacity: 0; transform: translateY(0) translateX(0) scale(0.6); }
+    10% { opacity: 0.9; }
+    50% { opacity: 1; transform: translateY(-60vh) translateX(20px) scale(1.1); }
+    90% { opacity: 0.8; }
+    100% { opacity: 0; transform: translateY(-100vh) translateX(-20px) scale(0.4); }
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+  h1, h2, h3, .display { font-family: 'Cormorant Garamond', serif; font-weight: 500; letter-spacing: 0.005em; color: var(--ink); }
+  .italiana { font-family: 'Italiana', serif; letter-spacing: 0.06em; }
+
+  .hero { padding: 120px 0 90px; text-align: center; position: relative; }
+  .badge {
+    display: inline-block; padding: 10px 24px;
+    border: 1px solid rgba(168,134,63,0.35); border-radius: 999px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15px; color: var(--gold-deep);
+    background: rgba(255,250,240,0.55); backdrop-filter: blur(8px);
+    letter-spacing: 0.08em; margin-bottom: 36px; animation: fade-in 1.2s ease-out both;
+  }
+  .hero h1 {
+    font-size: clamp(56px, 9vw, 112px); line-height: 1.02;
+    font-weight: 400; font-style: italic;
+    background: linear-gradient(180deg, #7a6338 0%, #b8924c 55%, #d8b66e 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 20px; animation: fade-up 1.3s ease-out 0.1s both;
+  }
+  .hero h1 .amp { font-family: 'Italiana', serif; font-style: normal; font-size: 0.75em; vertical-align: 0.05em; color: var(--gold); }
+  .tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px,2.4vw,26px);
+    font-style: italic; color: var(--ink-soft); margin-bottom: 48px;
+    animation: fade-up 1.3s ease-out 0.3s both; }
+  .handle-row { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--ink-soft);
+    animation: fade-up 1.3s ease-out 0.5s both; }
+  .handle-row strong { color: var(--gold-deep); font-weight: 500; letter-spacing: 0.04em; }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  .sep { display: flex; align-items: center; justify-content: center; gap: 14px;
+    padding: 40px 0; color: var(--gold); font-size: 14px; letter-spacing: 0.6em; opacity: 0.75; }
+  .sep::before, .sep::after { content: ''; height: 1px; width: 80px;
+    background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent); }
+
+  .eyebrow { display: block; text-align: center; font-family: 'Nunito', sans-serif;
+    font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold-deep); margin-bottom: 10px; }
+  .section-title { text-align: center; font-size: clamp(36px,5vw,56px);
+    font-style: italic; font-weight: 400; margin-bottom: 14px; }
+  .section-sub { text-align: center; font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px; color: var(--ink-soft); margin-bottom: 56px; }
+
+  .bio-card {
+    background: linear-gradient(135deg, rgba(255,250,240,0.85) 0%, rgba(245,235,214,0.75) 100%);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(201,169,106,0.25); border-radius: 28px;
+    padding: 56px 48px; box-shadow: var(--shadow-soft);
+    position: relative; overflow: hidden;
+  }
+  .bio-card::before { content: ''; position: absolute; top: -1px; left: -1px; right: -1px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,230,180,0.9), transparent); }
+  .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; }
+  .bio-field { border-bottom: 1px dashed rgba(168,134,63,0.25); padding-bottom: 18px; }
+  .bio-field .label { font-family: 'Nunito', sans-serif; font-size: 11px;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 8px; }
+  .bio-field .value { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--ink); font-weight: 500; }
+  .bio-field .value.italic { font-style: italic; }
+  .bio-field .value.small { font-size: 19px; line-height: 1.5; }
+  .content-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+  .tag { padding: 6px 16px; border-radius: 999px;
+    background: rgba(233,215,176,0.45); border: 1px solid rgba(201,169,106,0.3);
+    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; color: var(--gold-deep); }
+  .stat-number { font-family: 'Italiana', serif; font-size: 48px; line-height: 1; color: var(--gold-deep); letter-spacing: 0.04em; }
+  .stat-number small { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--ink-soft); margin-left: 8px; letter-spacing: 0; }
+
+  .schemes { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; }
+  .scheme {
+    background: linear-gradient(160deg, rgba(255,250,240,0.9) 0%, rgba(249,239,220,0.8) 100%);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(201,169,106,0.25); border-radius: 24px; padding: 44px 40px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.6s ease, border-color 0.6s ease;
+    position: relative; overflow: hidden;
+  }
+  .scheme::after { content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 0%, rgba(255,225,160,0.25), transparent 55%);
+    pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
+  .scheme:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: rgba(201,169,106,0.5); }
+  .scheme:hover::after { opacity: 1; }
+  .scheme-tag { display: inline-block; font-family: 'Nunito', sans-serif; font-size: 11px;
+    letter-spacing: 0.36em; text-transform: uppercase; color: var(--gold-deep);
+    padding: 6px 14px; border: 1px solid rgba(201,169,106,0.4); border-radius: 999px;
+    margin-bottom: 20px; background: rgba(255,250,240,0.6); }
+  .scheme h3 { font-size: 36px; font-style: italic; font-weight: 500; line-height: 1.15; margin-bottom: 12px; }
+  .scheme p.lead { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: var(--ink-soft); margin-bottom: 32px; }
+
+  .steps { display: flex; flex-direction: column; gap: 18px; }
+  .step { display: flex; align-items: flex-start; gap: 20px; padding: 18px 20px;
+    background: rgba(255,250,240,0.55); border: 1px solid rgba(201,169,106,0.18); border-radius: 16px;
+    transition: background 0.4s ease, transform 0.4s ease; }
+  .step:hover { background: rgba(255,243,210,0.75); transform: translateX(4px); }
+  .step-num { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #f3d98f 0%, #c9a96a 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Italiana', serif; font-size: 20px; color: #5a4a20;
+    box-shadow: 0 4px 14px -4px rgba(168,134,63,0.5), inset 0 1px 0 rgba(255,255,255,0.6); }
+  .step-body .step-label { font-family: 'Nunito', sans-serif; font-size: 10px;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-deep);
+    display: block; margin-bottom: 4px; }
+  .step-body .step-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--ink); line-height: 1.4; }
+
+  .blind { display: flex; flex-direction: column; justify-content: space-between; }
+  .envelope { margin-top: auto; aspect-ratio: 3/2; border-radius: 16px;
+    background: radial-gradient(ellipse at 50% 40%, rgba(255,243,207,0.9) 0%, transparent 60%),
+                linear-gradient(135deg, #f8e6bd 0%, #e9cc8a 100%);
+    border: 1px solid rgba(201,169,106,0.4);
+    position: relative; display: flex; align-items: center; justify-content: center;
+    overflow: hidden; transition: transform 0.6s ease; }
+  .envelope:hover { transform: scale(1.02) rotate(-0.6deg); }
+  .envelope::before { content: ''; position: absolute; inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+    transform: translateX(-100%); animation: shimmer 4s ease-in-out infinite; }
+  @keyframes shimmer { 0%,100% { transform: translateX(-100%); } 50% { transform: translateX(100%); } }
+  .envelope .seal { font-family: 'Italiana', serif; font-size: 60px; color: #8a6a28;
+    text-shadow: 0 2px 10px rgba(255,255,255,0.6); z-index: 1; }
+  .envelope .seal-sub { position: absolute; bottom: 18px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px;
+    color: #8a6a28; letter-spacing: 0.2em; }
+
+  footer { text-align: center; padding: 100px 24px 60px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px;
+    color: var(--ink-soft); letter-spacing: 0.04em; }
+  footer .sun { display: inline-block; color: var(--gold-deep); animation: twinkle 3.5s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.15); } }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s ease, transform 1s cubic-bezier(0.2,0.8,0.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 820px) {
+    .hero { padding: 90px 0 60px; }
+    .wrap { padding: 0 22px; }
+    .bio-card { padding: 40px 28px; border-radius: 22px; }
+    .bio-grid { grid-template-columns: 1fr; gap: 28px; }
+    .schemes { grid-template-columns: 1fr; }
+    .scheme { padding: 36px 28px; }
+    .scheme h3 { font-size: 30px; }
+    .step-body .step-text { font-size: 18px; }
+    .envelope .seal { font-size: 46px; }
+    .sep::before, .sep::after { width: 40px; }
+  }
+  @media (max-width: 480px) {
+    .badge { font-size: 13px; padding: 8px 18px; }
+    .bio-field .value { font-size: 20px; }
+    .stat-number { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb o1"></div><div class="orb o2"></div>
+    <div class="orb o3"></div><div class="orb o4"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="particles" id="particles" aria-hidden="true"><span class="particle" style="width: 4.89531px; height: 4.89531px; left: 37.5049vw; bottom: -18.0521vh; animation-duration: 29.7841s; animation-delay: -6.84139s;"></span><span class="particle" style="width: 3.04994px; height: 3.04994px; left: 70.1233vw; bottom: -14.8268vh; animation-duration: 14.0729s; animation-delay: -4.55804s;"></span><span class="particle" style="width: 4.9306px; height: 4.9306px; left: 46.5652vw; bottom: -19.1069vh; animation-duration: 25.8576s; animation-delay: -6.50689s;"></span><span class="particle" style="width: 2.68338px; height: 2.68338px; left: 17.2354vw; bottom: -10.8511vh; animation-duration: 25.8981s; animation-delay: -15.63s;"></span><span class="particle" style="width: 2.64269px; height: 2.64269px; left: 36.8502vw; bottom: -16.2259vh; animation-duration: 27.9569s; animation-delay: -17.6765s;"></span><span class="particle" style="width: 4.66335px; height: 4.66335px; left: 71.4818vw; bottom: -25.3984vh; animation-duration: 23.332s; animation-delay: -0.259592s;"></span><span class="particle" style="width: 4.81652px; height: 4.81652px; left: 16.6336vw; bottom: -28.6418vh; animation-duration: 24.771s; animation-delay: -12.2019s;"></span><span class="particle" style="width: 2.23228px; height: 2.23228px; left: 84.0213vw; bottom: -19.7195vh; animation-duration: 21.3989s; animation-delay: -6.16926s;"></span><span class="particle" style="width: 2.39311px; height: 2.39311px; left: 75.3256vw; bottom: -16.8069vh; animation-duration: 24.3749s; animation-delay: -0.106645s;"></span><span class="particle" style="width: 4.51015px; height: 4.51015px; left: 68.1606vw; bottom: -29.6459vh; animation-duration: 19.9162s; animation-delay: -5.28082s;"></span><span class="particle" style="width: 2.9851px; height: 2.9851px; left: 50.695vw; bottom: -17.8411vh; animation-duration: 29.2903s; animation-delay: -12.6435s;"></span><span class="particle" style="width: 4.03443px; height: 4.03443px; left: 36.6994vw; bottom: -26.2569vh; animation-duration: 19.5634s; animation-delay: -6.70799s;"></span><span class="particle" style="width: 3.80246px; height: 3.80246px; left: 52.7675vw; bottom: -22.62vh; animation-duration: 15.3779s; animation-delay: -1.2869s;"></span><span class="particle" style="width: 3.82912px; height: 3.82912px; left: 72.3079vw; bottom: -17.2701vh; animation-duration: 28.9819s; animation-delay: -8.96389s;"></span><span class="particle" style="width: 2.16723px; height: 2.16723px; left: 83.9575vw; bottom: -21.3409vh; animation-duration: 21.678s; animation-delay: -5.96687s;"></span><span class="particle" style="width: 4.83067px; height: 4.83067px; left: 17.2558vw; bottom: -17.2985vh; animation-duration: 24.7116s; animation-delay: -0.144839s;"></span><span class="particle" style="width: 2.22447px; height: 2.22447px; left: 30.7304vw; bottom: -26.8813vh; animation-duration: 25.2202s; animation-delay: -15.9567s;"></span><span class="particle" style="width: 4.71871px; height: 4.71871px; left: 13.0007vw; bottom: -21.1561vh; animation-duration: 16.4478s; animation-delay: -14.5405s;"></span><span class="particle" style="width: 3.71143px; height: 3.71143px; left: 99.2599vw; bottom: -27.019vh; animation-duration: 20.3959s; animation-delay: -10.9397s;"></span><span class="particle" style="width: 3.42463px; height: 3.42463px; left: 38.7545vw; bottom: -27.5341vh; animation-duration: 19.3227s; animation-delay: -16.0456s;"></span><span class="particle" style="width: 3.45794px; height: 3.45794px; left: 57.7779vw; bottom: -10.1059vh; animation-duration: 21.728s; animation-delay: -6.38242s;"></span><span class="particle" style="width: 3.79564px; height: 3.79564px; left: 26.2725vw; bottom: -10.3911vh; animation-duration: 16.3128s; animation-delay: -3.08667s;"></span></div>
+
+  <header class="hero wrap">
+    <span class="badge">☀️ Light and Night &nbsp;|&nbsp; For Xia Mingxing ✦</span>
+    <h1>Luminous <span class="amp">·</span> <em>Softness</em></h1>
+    <p class="tagline">“Where the light feels softer.”</p>
+    <p class="handle-row">a fansite by <strong>@Jessica6201m</strong> &nbsp;·&nbsp; curated as <strong>mingxingdiary</strong></p>
+  </header>
+
+  <div class="sep" aria-hidden="true">✦ · · ✦</div>
+
+  <section class="wrap reveal" style="padding: 30px 32px;">
+    <span class="eyebrow">About the fansite</span>
+    <h2 class="section-title">A quiet love letter, <em>kept in gold.</em></h2>
+    <p class="section-sub">A fan project dedicated to Xia Mingxing — gathered in softness, one page at a time.</p>
+
+    <div class="bio-card">
+      <div class="bio-grid">
+        <div class="bio-field"><div class="label">Name</div><div class="value italic">mingxingdiary</div></div>
+        <div class="bio-field"><div class="label">Handle</div><div class="value">@Jessica6201m</div></div>
+        <div class="bio-field"><div class="label">Project</div><div class="value italic">Luminous Softness</div></div>
+        <div class="bio-field"><div class="label">Archive</div>
+          <div class="value"><span class="stat-number">34<small>posts</small></span></div></div>
+        <div class="bio-field" style="grid-column: 1 / -1;">
+          <div class="label">Description</div>
+          <div class="value italic small">A fan project dedicated to Xia Mingxing — tender notes, soft translations, stories kept near the heart.</div>
+        </div>
+        <div class="bio-field" style="grid-column: 1 / -1; border-bottom: none; padding-bottom: 0;">
+          <div class="label">Content</div>
+          <div class="content-tags">
+            <span class="tag">quotes</span><span class="tag">story</span><span class="tag">translations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep" aria-hidden="true">✦ · · ✦</div>
+
+  <section class="wrap reveal" style="padding: 30px 32px 40px;">
+    <span class="eyebrow">How to get</span>
+    <h2 class="section-title">Digital Artbook <em>— Xia Mingxing 2026</em></h2>
+    <p class="section-sub">Two little paths of light. Follow whichever calls you home.</p>
+
+    <div class="schemes">
+      <article class="scheme">
+        <span class="scheme-tag">Scheme 01 · Artbook</span>
+        <h3>Get the <em>Artbook</em></h3>
+        <p class="lead">A three-step ritual — gentle, kind, and a little bit magical.</p>
+        <div class="steps">
+          <div class="step"><div class="step-num">I</div>
+            <div class="step-body"><span class="step-label">Step one</span>
+              <div class="step-text">Follow the fansite.</div></div></div>
+          <div class="step"><div class="step-num">II</div>
+            <div class="step-body"><span class="step-label">Step two</span>
+              <div class="step-text">Leave a birthday wish in the comments — with your Gmail.</div></div></div>
+          <div class="step"><div class="step-num">III</div>
+            <div class="step-body"><span class="step-label">Step three</span>
+              <div class="step-text">Wait quietly — the artbook will arrive like sunlight.</div></div></div>
+        </div>
+      </article>
+
+      <article class="scheme blind">
+        <div>
+          <span class="scheme-tag">Scheme 02 · Blind Box</span>
+          <h3><em>Blind</em> Box</h3>
+          <p class="lead">Open a small envelope of words — a mystery message from Xia Mingxing, just for you.</p>
+        </div>
+        <div class="envelope" aria-label="Blind box envelope">
+          <span class="seal">✦</span>
+          <span class="seal-sub">open with care</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="sep" aria-hidden="true">✦ · · ✦</div>
+
+  <footer>mingxingdiary © 2026 &nbsp;—&nbsp; made with <span class="sun">☀️</span> for Xia Mingxing</footer>
+
+<script>
+  (function(){
+    const root = document.getElementById('particles');
+    if (!root) return;
+    for (let i = 0; i < 22; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle';
+      const s = 2 + Math.random() * 3;
+      p.style.width = s + 'px'; p.style.height = s + 'px';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.bottom = (-10 - Math.random() * 20) + 'vh';
+      p.style.animationDuration = (14 + Math.random() * 16) + 's';
+      p.style.animationDelay = (-Math.random() * 18) + 's';
+      root.appendChild(p);
+    }
+  })();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+<script defer="" src="./mingxingdiary — Luminous Softness (Style 1)_files/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;7f7b0fd8732c4326aae4b9d58d5c514a&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f25ce0fdeba2739',t:'MTc3NzIwODc4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; visibility: hidden;" src="./mingxingdiary — Luminous Softness (Style 1)_files/saved_resource.html"></iframe>
+
+</body></html>
