@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mingxingdiary — Luminous Softness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Italiana&family=Caveat:wght@400;500&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fbf5ea;
+      --cream-deep: #f5ebd6;
+      --champagne: #e9d7b0;
+      --gold: #c9a96a;
+      --gold-deep: #a8863f;
+      --ink: #5a4a32;
+      --ink-soft: #8a7553;
+      --rose: #e8c9b0;
+      --white-warm: #fffaf0;
+      --shadow-soft: 0 20px 60px -20px rgba(168, 134, 63, 0.25);
+      --shadow-card: 0 10px 40px -12px rgba(168, 134, 63, 0.18);
+      --shadow-hover: 0 24px 70px -18px rgba(168, 134, 63, 0.35);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif; font-weight: 300;
+      background: var(--cream); color: var(--ink);
+      line-height: 1.7; overflow-x: hidden; position: relative; min-height: 100vh;
+    }
+    .bg-orbs { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; animation: drift 22s ease-in-out infinite alternate; }
+    .orb.o1 { width: 480px; height: 480px; background: radial-gradient(circle, #ffe7b8 0%, transparent 70%); top: -120px; left: -80px; }
+    .orb.o2 { width: 560px; height: 560px; background: radial-gradient(circle, #f5d9a8 0%, transparent 70%); top: 40%; right: -160px; animation-delay: -7s; animation-duration: 28s; }
+    .orb.o3 { width: 420px; height: 420px; background: radial-gradient(circle, #f3c9b0 0%, transparent 70%); bottom: -120px; left: 20%; animation-delay: -14s; animation-duration: 32s; }
+    .orb.o4 { width: 320px; height: 320px; background: radial-gradient(circle, #fff1cf 0%, transparent 70%); top: 22%; left: 45%; animation-delay: -4s; animation-duration: 26s; }
+    @keyframes drift { 0% { transform: translate(0,0) scale(1);} 50% { transform: translate(40px,-30px) scale(1.08);} 100% { transform: translate(-30px,40px) scale(0.96);} }
+
+    .grain { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.18; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.66  0 0 0 0 0.52  0 0 0 0 0.25  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+    .particle { position: absolute; width: 3px; height: 3px; background: #fff3cf; border-radius: 50%;
+      box-shadow: 0 0 8px 2px rgba(255,225,160,0.75); opacity: 0; animation: float-up linear infinite; }
+    @keyframes float-up {
+      0% { opacity: 0; transform: translateY(0) translateX(0) scale(0.6); }
+      10% { opacity: 0.9; }
+      50% { opacity: 1; transform: translateY(-60vh) translateX(20px) scale(1.1); }
+      90% { opacity: 0.8; }
+      100% { opacity: 0; transform: translateY(-100vh) translateX(-20px) scale(0.4); }
+    }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+    h1, h2, h3, .display { font-family: 'Cormorant Garamond', serif; font-weight: 500; letter-spacing: 0.005em; color: var(--ink); }
+    .italiana { font-family: 'Italiana', serif; letter-spacing: 0.06em; }
+
+    /* NAVIGATION */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(251, 245, 234, 0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201, 169, 106, 0.2);
+      padding: 20px 0; margin-bottom: 0;
+    }
+    .navbar-content { display: flex; justify-content: space-between; align-items: center; }
+    .navbar-brand { cursor: pointer; font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: var(--ink); transition: opacity 0.3s; }
+    .navbar-brand:hover { opacity: 0.7; }
+    .navbar-menu { display: flex; gap: 32px; }
+    .navbar-menu a, .navbar-menu button { 
+      background: none; border: none; cursor: pointer;
+      font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--ink-soft);
+      transition: color 0.3s; text-decoration: none;
+    }
+    .navbar-menu a:hover, .navbar-menu button:hover { color: var(--gold-deep); }
+    .navbar-menu a.active, .navbar-menu button.active { color: var(--gold-deep); font-weight: 500; }
+
+    .hero { padding: 120px 0 90px; text-align: center; position: relative; }
+    .badge {
+      display: inline-block; padding: 10px 24px;
+      border: 1px solid rgba(168,134,63,0.35); border-radius: 999px;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 15px; color: var(--gold-deep);
+      background: rgba(255,250,240,0.55); backdrop-filter: blur(8px);
+      letter-spacing: 0.08em; margin-bottom: 36px; animation: fade-in 1.2s ease-out both;
+    }
+    .hero h1 {
+      font-size: clamp(56px, 9vw, 112px); line-height: 1.02;
+      font-weight: 400; font-style: italic;
+      background: linear-gradient(180deg, #7a6338 0%, #b8924c 55%, #d8b66e 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin-bottom: 20px; animation: fade-up 1.3s ease-out 0.1s both;
+    }
+    .hero h1 .amp { font-family: 'Italiana', serif; font-style: normal; font-size: 0.75em; vertical-align: 0.05em; color: var(--gold); }
+    .tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px,2.4vw,26px);
+      font-style: italic; color: var(--ink-soft); margin-bottom: 48px;
+      animation: fade-up 1.3s ease-out 0.3s both; }
+    .handle-row { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--ink-soft);
+      animation: fade-up 1.3s ease-out 0.5s both; }
+    .handle-row strong { color: var(--gold-deep); font-weight: 500; letter-spacing: 0.04em; }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    .sep { display: flex; align-items: center; justify-content: center; gap: 14px;
+      padding: 40px 0; color: var(--gold); font-size: 14px; letter-spacing: 0.6em; opacity: 0.75; }
+    .sep::before, .sep::after { content: ''; height: 1px; width: 80px;
+      background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent); }
+
+    .eyebrow { display: block; text-align: center; font-family: 'Nunito', sans-serif;
+      font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold-deep); margin-bottom: 10px; }
+    .section-title { text-align: center; font-size: clamp(36px,5vw,56px);
+      font-style: italic; font-weight: 400; margin-bottom: 14px; }
+    .section-sub { text-align: center; font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 18px; color: var(--ink-soft); margin-bottom: 56px; }
+
+    .bio-card {
+      background: linear-gradient(135deg, rgba(255,250,240,0.85) 0%, rgba(245,235,214,0.75) 100%);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201,169,106,0.25); border-radius: 28px;
+      padding: 56px 48px; box-shadow: var(--shadow-soft);
+      position: relative; overflow: hidden;
+    }
+    .bio-card::before { content: ''; position: absolute; top: -1px; left: -1px; right: -1px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,230,180,0.9), transparent); }
+    .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; }
+    .bio-field { border-bottom: 1px dashed rgba(168,134,63,0.25); padding-bottom: 18px; }
+    .bio-field .label { font-family: 'Nunito', sans-serif; font-size: 11px;
+      letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 8px; }
+    .bio-field .value { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--ink); }
+    .bio-field .value.italic { font-style: italic; }
+    .bio-field .value.small { font-size: 15px; }
+    .stat-number { display: inline-flex; flex-direction: column; align-items: center; font-size: 28px; font-weight: 600; }
+    .stat-number small { font-size: 11px; font-weight: 400; letter-spacing: 0.04em; margin-top: 2px; }
+    .content-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { display: inline-block; padding: 6px 16px; background: rgba(201,169,106,0.15);
+      border-radius: 999px; font-size: 13px; color: var(--gold-deep); }
+    @media (max-width: 768px) { .bio-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+    .schemes { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+    .scheme {
+      background: linear-gradient(135deg, rgba(255,250,240,0.85) 0%, rgba(245,235,214,0.75) 100%);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201,169,106,0.25); border-radius: 28px;
+      padding: 48px; box-shadow: var(--shadow-soft);
+      position: relative; overflow: hidden;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .scheme:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+    .scheme-tag { display: block; font-family: 'Nunito', sans-serif; font-size: 11px;
+      letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 16px; }
+    .scheme h3 { font-size: clamp(24px,4vw,40px); margin-bottom: 20px; }
+    .scheme .lead { font-size: 16px; color: var(--ink-soft); margin-bottom: 32px; line-height: 1.6; }
+
+    .steps { display: flex; flex-direction: column; gap: 24px; }
+    .step { display: flex; gap: 20px; }
+    .step-num { font-family: 'Italiana', serif; font-size: 28px; color: var(--gold); min-width: 40px; }
+    .step-body { flex: 1; }
+    .step-label { font-family: 'Nunito', sans-serif; font-size: 11px; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--gold-deep); display: block; margin-bottom: 6px; }
+    .step-text { font-size: 15px; color: var(--ink); }
+
+    .scheme.blind { display: flex; flex-direction: column; justify-content: space-between; }
+    .envelope { display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 48px 32px; cursor: pointer; position: relative;
+      transition: all 0.3s ease;
+    }
+    .envelope:hover { transform: scale(1.05); }
+    .seal { font-size: 80px; animation: float-seal 3s ease-in-out infinite; display: block; }
+    .seal-sub { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--ink-soft);
+      margin-top: 12px; letter-spacing: 0.08em; }
+    @keyframes float-seal { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @media (max-width: 768px) { .schemes { grid-template-columns: 1fr; } }
+
+    footer { text-align: center; padding: 60px 32px 40px; font-size: 14px; color: var(--ink-soft); }
+    footer .sun { display: inline-block; animation: sun-shine 2s ease-in-out infinite; }
+    @keyframes sun-shine { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+    .reveal { opacity: 0; animation: fade-up 0.8s ease-out forwards; }
+    .page-container { animation: fade-in 0.3s ease-out; }
+
+    /* BACK BUTTON */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: none; border: 1px solid rgba(168,134,63,0.35); border-radius: 999px;
+      padding: 10px 24px; cursor: pointer;
+      font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-deep);
+      transition: all 0.3s; margin-bottom: 40px;
+    }
+    .back-btn:hover { background: rgba(201,169,106,0.1); }
+
+    /* PAGE SPECIFIC */
+    .artbook-content, .blindbox-content { padding: 80px 0; }
+    .artbook-content h1, .blindbox-content h1 {
+      font-size: clamp(48px,8vw,80px); margin-bottom: 30px; text-align: center;
+    }
+    
+    .page-section { margin-bottom: 80px; }
+    .page-section h2 { font-size: clamp(28px,5vw,48px); margin-bottom: 24px; }
+    .page-section p { font-size: 16px; line-height: 1.8; color: var(--ink); margin-bottom: 16px; }
+
+    @media (max-width: 768px) {
+      .navbar-menu { gap: 16px; }
+      .wrap { padding: 0 24px; }
+      .hero { padding: 80px 0 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb o1"></div><div class="orb o2"></div>
+    <div class="orb o3"></div><div class="orb o4"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="wrap navbar-content">
+      <div class="navbar-brand" onclick="showPage('home')">mingxingdiary</div>
+      <div class="navbar-menu">
+        <button onclick="showPage('home')" class="nav-link active" data-page="home">Home</button>
+        <button onclick="showPage('artbook')" class="nav-link" data-page="artbook">Artbook</button>
+        <button onclick="showPage('blindbox')" class="nav-link" data-page="blindbox">Blind Box</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div id="home-page" class="page-container">
+    <header class="hero wrap">
+      <span class="badge">☀️ Light and Night &nbsp;|&nbsp; For Xia Mingxing ✦</span>
+      <h1>Luminous <span class="amp">·</span> <em>Softness</em></h1>
+      <p class="tagline">"Where the light feels softer."</p>
+      <p class="handle-row">a fansite by <strong>@Jessica6201m</strong> &nbsp;·&nbsp; curated as <strong>mingxingdiary</strong></p>
+    </header>
+
+    <div class="sep" aria-hidden="true">✦ · · ✦</div>
+
+    <section class="wrap reveal" style="padding: 30px 32px;">
+      <span class="eyebrow">About the fansite</span>
+      <h2 class="section-title">A devotion wrapped <em>in golden light.</em></h2>
+      <p class="section-sub">A fan project dedicated to Xia Mingxing — gathered in softness, one page at a time.</p>
+
+      <div class="bio-card">
+        <div class="bio-grid">
+          <div class="bio-field"><div class="label">Name</div><div class="value italic">mingxingdiary</div></div>
+          <div class="bio-field"><div class="label">Handle</div><div class="value">@Jessica6201m</div></div>
+          <div class="bio-field"><div class="label">Project</div><div class="value italic">Luminous Softness</div></div>
+          <div class="bio-field" style="grid-column: 1 / -1;">
+            <div class="label">Description</div>
+            <div class="value italic small">A fan project dedicated to Xia Mingxing — tender notes, soft translations, stories kept near the heart.</div>
+          </div>
+          <div class="bio-field" style="grid-column: 1 / -1; border-bottom: none; padding-bottom: 0;">
+            <div class="label">Content</div>
+            <div class="content-tags">
+              <span class="tag">quotes</span><span class="tag">story</span><span class="tag">fan project</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep" aria-hidden="true">✦ · · ✦</div>
+
+    <section class="wrap reveal" style="padding: 30px 32px 40px;">
+      <span class="eyebrow">How to get</span>
+      <h2 class="section-title">Digital Artbook <em>— Xia Mingxing 2026</em></h2>
+      <p class="section-sub">Two paths of light, each calling in its own gentle way.</p>
+
+      <div class="schemes">
+        <article class="scheme" onclick="showPage('artbook')">
+          <span class="scheme-tag">Scheme 01 · Artbook</span>
+          <h3>Get the <em>Artbook</em></h3>
+          <p class="lead">A celebration of creativity — three simple steps to join this tender ritual.</p>
+          <div class="steps">
+            <div class="step"><div class="step-num">I</div>
+              <div class="step-body"><span class="step-label">Follow</span>
+                <div class="step-text">Follow @Jessica6201m on X</div></div></div>
+            <div class="step"><div class="step-num">II</div>
+              <div class="step-body"><span class="step-label">Answer</span>
+                <div class="step-text">Tell us why you love Xia Mingxing</div></div></div>
+            <div class="step"><div class="step-num">III</div>
+              <div class="step-body"><span class="step-label">Wait</span>
+                <div class="step-text">Receive it by May 26th ✦</div></div></div>
+          </div>
+        </article>
+
+        <article class="scheme blind" onclick="showPage('blindbox')">
+          <div>
+            <span class="scheme-tag">Scheme 02 · Blind Box</span>
+            <h3><em>Blind</em> Box</h3>
+            <p class="lead">A mystery wrapped in softness — a message written just for your heart.</p>
+            <p style="font-size: 14px; color: var(--ink-soft); margin-top: 20px;">Open an envelope of words, a tender moment from Xia Mingxing.</p>
+          </div>
+          <div class="envelope" aria-label="Blind box envelope">
+            <span class="seal">✦</span>
+            <span class="seal-sub">open with care</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="sep" aria-hidden="true">✦ · · ✦</div>
+
+    <footer>mingxingdiary © 2026 &nbsp;—&nbsp; made with <span class="sun">☀️</span> for Xia Mingxing</footer>
+  </div>
+
+  <!-- ARTBOOK PAGE -->
+  <div id="artbook-page" style="display: none;" class="page-container">
+    <section class="wrap artbook-content">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <h1>Digital Artbook — Xia Mingxing 2026</h1>
+      <p style="text-align: center; font-size: 18px; color: var(--ink-soft); margin-bottom: 60px;">A celebration of creativity and devotion.</p>
+
+      <div class="bio-card" style="margin-bottom: 60px;">
+        <h2 style="text-align: center; margin-bottom: 40px;">Three Steps to Join</h2>
+        <div class="steps" style="gap: 40px;">
+          <div class="step">
+            <div class="step-num" style="font-size: 48px;">I</div>
+            <div class="step-body">
+              <span class="step-label">Step One: Follow</span>
+              <div class="step-text" style="font-size: 16px;">
+                Follow <strong>@Jessica6201m</strong> on X
+                <div style="margin-top: 12px;">
+                  <a href="https://x.com/Jessica6201m" target="_blank" style="display: inline-block; padding: 10px 20px; background: rgba(201,169,106,0.2); border-radius: 999px; color: var(--gold-deep); text-decoration: none; transition: all 0.3s;">Visit X Profile →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="font-size: 48px;">II</div>
+            <div class="step-body">
+              <span class="step-label">Step Two: Answer & Submit</span>
+              <div class="step-text" style="font-size: 16px;">
+                Fill out the form with your answer to "Why do you love Xia Mingxing?" and provide your Gmail address.
+                <div style="margin-top: 12px;">
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSe43BUhVSBSxqPoifQvbMfWtuoxjQc-tOzge0USEcSDrdMEUA/viewform?usp=publish-editor" target="_blank" style="display: inline-block; padding: 10px 20px; background: rgba(201,169,106,0.2); border-radius: 999px; color: var(--gold-deep); text-decoration: none; transition: all 0.3s;">Open Form →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="font-size: 48px;">III</div>
+            <div class="step-body">
+              <span class="step-label">Step Three: Wait & Receive</span>
+              <div class="step-text" style="font-size: 16px;">Patience is a gift. By <strong>May 26th</strong>, the artbook will arrive in your inbox like sunlight breaking through clouds.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-section">
+        <h2>What's Inside</h2>
+        <p>The Digital Artbook is a curated collection celebrating Xia Mingxing — high-resolution artwork, tender quotes, and stories woven with love. Each page has been carefully arranged, a gift made of light and softness.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>A Note of Gratitude</h2>
+        <p>We are deeply grateful to all the artists who have given permission for their artwork to be featured in this artbook. This celebration of Xia Mingxing's birthday would not be possible without their generosity and trust. Thank you for allowing us to gather these beautiful moments of light.</p>
+      </div>
+
+      <div class="sep" style="margin-top: 80px;" aria-hidden="true">✦ · · ✦</div>
+      <footer style="padding-top: 40px;">mingxingdiary © 2026 &nbsp;—&nbsp; made with <span class="sun">☀️</span> for Xia Mingxing</footer>
+    </section>
+  </div>
+
+  <!-- BLIND BOX PAGE -->
+  <div id="blindbox-page" style="display: none;" class="page-container">
+    <section class="wrap" style="padding: 80px 32px;">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <h1 style="font-size: clamp(48px,8vw,80px); margin-bottom: 30px; text-align: center;">Blind Box</h1>
+      <p style="text-align: center; font-size: 18px; color: var(--ink-soft); margin-bottom: 60px;">A mystery wrapped in softness. A whisper of words, written just for you.</p>
+
+      <div class="bio-card" style="text-align: center; margin-bottom: 60px;">
+        <div style="padding: 60px 32px;">
+          <div class="envelope" onclick="revealMessage(this)" style="border: 2px dashed rgba(201,169,106,0.3); border-radius: 16px; padding: 80px 40px; cursor: pointer; transition: all 0.3s ease;" title="Click to open">
+            <span class="seal" style="font-size: 100px;">✦</span>
+            <span class="seal-sub">Click to open your message</span>
+          </div>
+          <div id="message-content" style="display: none; margin-top: 40px; padding-top: 40px; border-top: 1px solid rgba(201,169,106,0.2);">
+            <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; line-height: 1.8; color: var(--ink); margin-bottom: 20px;">
+              "In the quietness of your heart, you've kept a place for light. Thank you for believing, for wishing, for standing by my side. Your softness makes the world a gentler place. — Xia Mingxing ✦"
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-section">
+        <h2>What is the Blind Box?</h2>
+        <p>Each blind box contains a unique message from Xia Mingxing — words written in softness, meant to settle into your heart like golden light. There's a tenderness in mystery, a beauty in waiting. Open yours and discover what awaits.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>A Moment of Connection</h2>
+        <p>In a world that moves too fast, these messages ask you to slow down. To feel the weight of kindness. To know that somewhere, someone is thinking of you with warmth and devotion.</p>
+        <p>This is more than a gift — it's a conversation between hearts. A reminder that your presence matters, that your love is seen and cherished.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>With Gratitude</h2>
+        <p>We extend our deepest thanks to all the artists who have permitted their beautiful artwork to be part of this celebration. Your generosity has allowed us to create something truly special for Xia Mingxing's birthday. This artbook is a testament to the collective love and creativity that surrounds them.</p>
+      </div>
+
+      <div class="sep" style="margin-top: 80px;" aria-hidden="true">✦ · · ✦</div>
+      <footer style="padding-top: 40px;">mingxingdiary © 2026 &nbsp;—&nbsp; made with <span class="sun">☀️</span> for Xia Mingxing</footer>
+    </section>
+  </div>
+
+  <script>
+    // Initialize particles
+    (function(){
+      const root = document.getElementById('particles');
+      if (!root) return;
+      for (let i = 0; i < 22; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle';
+        const s = 2 + Math.random() * 3;
+        p.style.width = s + 'px'; p.style.height = s + 'px';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.bottom = (-10 - Math.random() * 20) + 'vh';
+        p.style.animationDuration = (14 + Math.random() * 16) + 's';
+        p.style.animationDelay = (-Math.random() * 18) + 's';
+        root.appendChild(p);
+      }
+    })();
+
+    // Page navigation
+    function showPage(pageName) {
+      // Hide all pages
+      document.getElementById('home-page').style.display = 'none';
+      document.getElementById('artbook-page').style.display = 'none';
+      document.getElementById('blindbox-page').style.display = 'none';
+
+      // Show selected page
+      document.getElementById(pageName + '-page').style.display = 'block';
+
+      // Update navbar active state
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.page === pageName) {
+          link.classList.add('active');
+        }
+      });
+
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Reveal message in blind box
+    function revealMessage(element) {
+      const msgContent = document.getElementById('message-content');
+      if (msgContent.style.display === 'none') {
+        msgContent.style.display = 'block';
+        element.style.borderStyle = 'solid';
+        element.style.borderColor = 'rgba(201,169,106,0.3)';
+      } else {
+        msgContent.style.display = 'none';
+        element.style.borderStyle = 'dashed';
+        element.style.borderColor = 'rgba(201,169,106,0.3)';
+      }
+    }
+
+    // Intersection observer for reveal animation
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
